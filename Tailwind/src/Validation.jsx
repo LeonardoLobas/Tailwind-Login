@@ -1,20 +1,45 @@
-const Object = {
-    email: 'leonardolobas',
-    emailRegex: '^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
-    senha: '123456',
-    senhaRegex: '/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[$*&@#])[0-9a-zA-Z$*&@#]{8,}$/'
-}
+import { useState } from "react";
 
+const objectValidation = {
+    email: {
+        emailName: "leonardolobas@gmail.com",
+        messageErrorEmail: "Email ou senha não conferem!",
+    },
+    senha: {
+        senhaType: "1234",
+        messageErrorSenha: "Email ou senha não conferem!",
+    },
+};
+const Validation = () => {
+    const [email, setEmail] = useState("");
+    const [senha, setSenha] = useState("");
+    const [error, setError] = useState("");
+    const validateEmail = (email) => {
+        if (email !== objectValidation.email.emailName) {
+            setError(objectValidation.email.messageErrorEmail);
+            return false;
+        }
+        return true;
+    };
+    const validateSenha = (senha) => {
+        if (senha !== objectValidation.senha.senhaType) {
+            setError(objectValidation.senha.messageErrorSenha);
+            return false;
+        }
+        return true;
+    };
 
+    return {
+        objectValidation,
+        email,
+        setEmail,
+        senha,
+        setSenha,
+        validateEmail,
+        validateSenha,
+        error,
+        setError,
+    };
+};
 
-
-const Validation = ({ type, value }) => {
-    const regex = type === 'email' ? Object.loginRegex : Object.senhaRegex;
-    const isValid = new RegExp(regex).test(value);
-
-    if (!isValid) {
-        alert(`${type} invalido`)
-    }
-}
-
-export default Validation
+export default Validation;
